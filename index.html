@@ -47,7 +47,7 @@
         const button = document.getElementById("start-button")
         const ctx = canvas.getContext("2d")
 
-        const pattern = /[A-Za-z]{3}[0-9]{3}/
+        const pattern = /[A-Za-z]{3}\s*[0-9]{3}/
 
         // Initialize the webcam
         const initializeWebcam = async () => {
@@ -70,14 +70,17 @@
             logger: function (m) { console.log(m) }
         })
 
+        await worker.setParameters({
+            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789',
+        })
+
         const captureFrameAndDetectText = () => {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 
             const img = canvas.toDataURL("image/png")
 
-            worker.recognize(
-                img
-            ).then(({ data: { text } }) => {
+            worker.recognize(img).then(({ data: { text } }) => {
+                console.log(text)
                 const match = text.match(pattern)
                 if (match) {
                     const regnummer = match[0]
