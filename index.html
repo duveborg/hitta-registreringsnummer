@@ -25,12 +25,10 @@
     <video id="video" autoplay></video>
     <canvas id="canvas" style="display:none;"></canvas>
     <script type="module">
-        // HTML elements
         const video = document.getElementById("video")
         const canvas = document.getElementById("canvas")
         const ctx = canvas.getContext("2d")
 
-        // Regular expression pattern
         const pattern = /[A-Za-z]{3}[0-9]{3}/
 
         // Initialize the webcam
@@ -49,7 +47,6 @@
             logger: function (m) { console.log(m) }
         })
 
-        // Function to capture frame and run OCR
         const captureFrameAndDetectText = () => {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 
@@ -63,8 +60,6 @@
                     const regnummer = match[0]
                     console.log(`Found: ${match[0]}`)
                     const link = `https://biluppgifter.se/fordon/${regnummer}`
-                    // open link in new window
-
                     window.open(link, '_blank')
                 }
             })
