@@ -17,16 +17,34 @@
             z-index: -1;
             /* Keeps the video in the background */
         }
+
+        #start-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        #start-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 
 </head>
 
 <body>
-    <video id="video" autoplay></video>
+    <button id="start-button">Start Video</button>
+    <video id="video" playsinline autoplay muted></video>
     <canvas id="canvas" style="display:none;"></canvas>
     <script type="module">
         const video = document.getElementById("video")
         const canvas = document.getElementById("canvas")
+        const button = document.getElementById("start-button")
         const ctx = canvas.getContext("2d")
 
         const pattern = /[A-Za-z]{3}[0-9]{3}/
@@ -71,8 +89,11 @@
             setInterval(captureFrameAndDetectText, 3000) // Run OCR every 5 seconds
         }
 
-        // Start the application and catch any errors
-        initializeApp().catch((error) => console.error("Initialization error:", error));
+        button.addEventListener("click", () => {
+            initializeApp().catch((error) => console.error("Initialization error:", error))
+            button.style.display = "none"
+        })
+
 
     </script>
 </body>
